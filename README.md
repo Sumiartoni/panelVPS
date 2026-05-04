@@ -23,6 +23,39 @@ Dashboard mandiri untuk memantau beban VPS secara realtime dan melihat statistik
 8. Jalankan `npm start`.
 9. Akses `http://IP_VPS:3007`.
 
+## Deploy via Git
+
+```bash
+cd /opt
+sudo git clone https://github.com/Sumiartoni/panelVPS.git vps-dashboard
+sudo chown -R $USER:$USER /opt/vps-dashboard
+cd /opt/vps-dashboard
+npm install
+cp .env.example .env
+nano .env
+```
+
+Lalu jalankan salah satu:
+
+### Opsi 1: PM2
+
+```bash
+sudo npm install -g pm2
+cd /opt/vps-dashboard
+pm2 start ecosystem.config.js
+pm2 save
+pm2 startup
+```
+
+### Opsi 2: systemd
+
+```bash
+sudo cp deploy/vps-dashboard.service /etc/systemd/system/vps-dashboard.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now vps-dashboard
+sudo systemctl status vps-dashboard
+```
+
 ## Catatan
 
 - Project ini terpisah dari website utama Anda.

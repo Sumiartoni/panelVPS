@@ -1,0 +1,15 @@
+[Unit]
+Description=Standalone VPS Dashboard
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/opt/vps-dashboard
+ExecStart=/usr/bin/node /opt/vps-dashboard/server.js
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
