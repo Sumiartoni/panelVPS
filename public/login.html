@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Dashboard VPS</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="auth-body">
+    <main class="auth-shell">
+      <section class="auth-card">
+        <p class="eyebrow">Private Monitor</p>
+        <h1>Dashboard VPS</h1>
+        <p class="auth-copy">
+          Pantau beban server dan trafik pengunjung dari satu panel yang berdiri
+          sendiri.
+        </p>
+
+        <form id="login-form" class="auth-form">
+          <label>
+            Username
+            <input type="text" name="username" placeholder="admin" required />
+          </label>
+
+          <label>
+            Password
+            <input
+              type="password"
+              name="password"
+              placeholder="Masukkan password"
+              required
+            />
+          </label>
+
+          <button type="submit">Masuk</button>
+          <p id="error-message" class="error-message"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="/login.js"></script>
+  </body>
+</html>

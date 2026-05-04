@@ -1,0 +1,17 @@
+{
+  "name": "vps-dashboard",
+  "version": "1.0.0",
+  "description": "Standalone VPS monitoring and visitor analytics dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "socket.io": "^4.8.1",
+    "systeminformation": "^5.25.11"
+  }
+}

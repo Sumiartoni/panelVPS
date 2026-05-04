@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard VPS</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Realtime Infrastructure</p>
+          <h1>VPS Dashboard</h1>
+        </div>
+        <div class="topbar-actions">
+          <span id="generated-at" class="muted-text">Memuat data...</span>
+          <button id="logout-button" class="ghost-button">Logout</button>
+        </div>
+      </header>
+
+      <section class="hero-grid">
+        <article class="stat-card">
+          <p>CPU Load</p>
+          <strong id="cpu-load">-</strong>
+        </article>
+        <article class="stat-card">
+          <p>Memory</p>
+          <strong id="memory-usage">-</strong>
+        </article>
+        <article class="stat-card">
+          <p>Disk</p>
+          <strong id="disk-usage">-</strong>
+        </article>
+        <article class="stat-card">
+          <p>Unique Visitor Hari Ini</p>
+          <strong id="visitor-count">-</strong>
+        </article>
+      </section>
+
+      <section class="grid-two">
+        <article class="panel">
+          <div class="panel-heading">
+            <h2>Server</h2>
+            <span class="badge" id="server-hostname">-</span>
+          </div>
+          <div class="info-list">
+            <div><span>Platform</span><strong id="platform">-</strong></div>
+            <div><span>Uptime</span><strong id="uptime">-</strong></div>
+            <div><span>RX/s</span><strong id="rx-speed">-</strong></div>
+            <div><span>TX/s</span><strong id="tx-speed">-</strong></div>
+            <div><span>Total RX</span><strong id="rx-total">-</strong></div>
+            <div><span>Total TX</span><strong id="tx-total">-</strong></div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <h2>Traffic</h2>
+            <span class="badge">Log Based</span>
+          </div>
+          <div class="info-list">
+            <div><span>Total Request</span><strong id="total-requests">-</strong></div>
+            <div><span>Request Hari Ini</span><strong id="requests-today">-</strong></div>
+            <div><span>Total Bandwidth</span><strong id="bandwidth">-</strong></div>
+            <div><span>Status 2xx</span><strong id="ok-status">-</strong></div>
+            <div><span>Status 3xx</span><strong id="redirect-status">-</strong></div>
+            <div><span>Status 4xx/5xx</span><strong id="error-status">-</strong></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="grid-two">
+        <article class="panel">
+          <div class="panel-heading">
+            <h2>Top Path</h2>
+          </div>
+          <div id="top-paths" class="list-block"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <h2>Top IP</h2>
+          </div>
+          <div id="top-ips" class="list-block"></div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-heading">
+          <h2>Akses Terbaru</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Waktu</th>
+                <th>IP</th>
+                <th>Method</th>
+                <th>Path</th>
+                <th>Status</th>
+                <th>Size</th>
+              </tr>
+            </thead>
+            <tbody id="recent-rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/dashboard.js"></script>
+  </body>
+</html>
