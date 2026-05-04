@@ -23,6 +23,9 @@
           </div>
           <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
             <span id="generated-at" class="small text-secondary">Memuat data...</span>
+            <button id="theme-toggle" class="btn btn-outline-secondary rounded-pill px-4">
+              Mode Gelap
+            </button>
             <button id="logout-button" class="btn btn-outline-dark rounded-pill px-4">
               Logout
             </button>
@@ -70,6 +73,64 @@
       </section>
 
       <section class="row g-4 mb-4">
+        <div class="col-12">
+          <article class="card dashboard-card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                <div>
+                  <h2 class="section-title mb-1">Realtime Matrix</h2>
+                  <p class="text-secondary small mb-0">
+                    Snapshot perubahan metrik live dalam beberapa update terakhir.
+                  </p>
+                </div>
+                <span class="badge rounded-pill text-bg-light border">Live Window</span>
+              </div>
+              <div class="row g-4">
+                <div class="col-12 col-xl-8">
+                  <div class="matrix-board">
+                    <div class="matrix-row">
+                      <span class="matrix-label">CPU</span>
+                      <div id="cpu-matrix" class="matrix-grid"></div>
+                    </div>
+                    <div class="matrix-row">
+                      <span class="matrix-label">RAM</span>
+                      <div id="memory-matrix" class="matrix-grid"></div>
+                    </div>
+                    <div class="matrix-row">
+                      <span class="matrix-label">Disk</span>
+                      <div id="disk-matrix" class="matrix-grid"></div>
+                    </div>
+                    <div class="matrix-row">
+                      <span class="matrix-label">Traffic</span>
+                      <div id="traffic-matrix" class="matrix-grid"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-xl-4">
+                  <div class="signal-legend">
+                    <div class="legend-item">
+                      <span class="legend-dot level-low"></span>
+                      <span>Rendah / stabil</span>
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-dot level-medium"></span>
+                      <span>Menengah</span>
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-dot level-high"></span>
+                      <span>Tinggi</span>
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-dot level-critical"></span>
+                      <span>Kritis / spike</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
         <div class="col-12 col-xl-6">
           <article class="card dashboard-card h-100">
             <div class="card-body">
@@ -170,6 +231,60 @@
       </section>
 
       <section class="row g-4 mb-4">
+        <div class="col-12">
+          <article class="card dashboard-card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                <div>
+                  <h2 class="section-title mb-1">Realtime Trends</h2>
+                  <p class="text-secondary small mb-0">
+                    Tren resource dari update socket terbaru.
+                  </p>
+                </div>
+                <span class="badge rounded-pill text-bg-light border">Auto refresh 5s</span>
+              </div>
+              <div class="row g-4">
+                <div class="col-12 col-md-6 col-xl-3">
+                  <div class="trend-card">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <strong>CPU</strong>
+                      <span id="cpu-trend-value" class="small text-secondary">-</span>
+                    </div>
+                    <div id="cpu-sparkline" class="sparkline"></div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                  <div class="trend-card">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <strong>RAM</strong>
+                      <span id="memory-trend-value" class="small text-secondary">-</span>
+                    </div>
+                    <div id="memory-sparkline" class="sparkline"></div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                  <div class="trend-card">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <strong>Disk</strong>
+                      <span id="disk-trend-value" class="small text-secondary">-</span>
+                    </div>
+                    <div id="disk-sparkline" class="sparkline"></div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                  <div class="trend-card">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <strong>Traffic</strong>
+                      <span id="traffic-trend-value" class="small text-secondary">-</span>
+                    </div>
+                    <div id="traffic-sparkline" class="sparkline"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
         <div class="col-12 col-xl-6">
           <article class="card dashboard-card h-100">
             <div class="card-body">
