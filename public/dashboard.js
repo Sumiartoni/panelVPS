@@ -17,18 +17,22 @@ function formatUptime(seconds) {
   return `${days}h ${hours}j ${minutes}m`;
 }
 
+function formatPercent(value) {
+  return `${Number(value || 0).toFixed(1)}%`;
+}
+
 function setList(containerId, items, primaryKey, secondaryKey) {
   const container = document.getElementById(containerId);
   if (!items.length) {
-    container.innerHTML = `<p class="muted-text">Belum ada data.</p>`;
+    container.innerHTML = `<p class="text-secondary small mb-0">Belum ada data.</p>`;
     return;
   }
 
   container.innerHTML = items
     .map(
       (item) => `
-        <div class="list-row">
-          <span>${item[primaryKey]}</span>
+        <div class="stack-list-row">
+          <span class="text-break">${item[primaryKey]}</span>
           <strong>${item[secondaryKey]}</strong>
         </div>
       `
@@ -40,7 +44,7 @@ function setRecentRows(rows) {
   const tbody = document.getElementById("recent-rows");
   if (!rows.length) {
     tbody.innerHTML =
-      '<tr><td colspan="6" class="empty-cell">Belum ada akses.</td></tr>';
+      '<tr><td colspan="6" class="text-center text-secondary py-4">Belum ada akses.</td></tr>';
     return;
   }
 
@@ -62,6 +66,10 @@ function setRecentRows(rows) {
 
 function updateDashboard(payload) {
   const { system, visitors, generatedAt } = payload;
+  const memoryFree = system.memory.free ?? Math.max(system.memory.total - system.memory.used, 0);
+  const diskFree = system.disk
+    ? system.disk.free ?? Math.max(system.disk.total - system.disk.used, 0)
+    : 0;
 
   document.getElementById("generated-at").textContent = `Update ${new Date(
     generatedAt
@@ -69,15 +77,33 @@ function updateDashboard(payload) {
   document.getElementById("server-hostname").textContent = system.hostname;
   document.getElementById("platform").textContent = system.platform;
   document.getElementById("uptime").textContent = formatUptime(system.uptime);
-  document.getElementById("cpu-load").textContent = `${system.cpuLoad}%`;
+  document.getElementById("cpu-load").textContent = formatPercent(system.cpuLoad);
+  document.getElementById(
+    "cpu-breakdown"
+  ).textContent = `Used: ${formatPercent(system.cpuLoad)} | Free: ${formatPercent(
+    system.cpuFree
+  )}`;
   document.getElementById(
     "memory-usage"
-  ).textContent = `${system.memory.usedPercent}%`;
+  ).textContent = formatPercent(system.memory.usedPercent);
+  document.getElementById(
+    "memory-breakdown"
+  ).textContent = `Used: ${formatBytes(system.memory.used)} | Free: ${formatBytes(
+    memoryFree
+  )} | Total: ${formatBytes(system.memory.total)}`;
   document.getElementById("disk-usage").textContent = system.disk
-    ? `${system.disk.usedPercent}%`
+    ? formatPercent(system.disk.usedPercent)
     : "-";
+  document.getElementById("disk-breakdown").textContent = system.disk
+    ? `Used: ${formatBytes(system.disk.used)} | Free: ${formatBytes(
+        diskFree
+      )} | Total: ${formatBytes(system.disk.total)}`
+    : "Disk tidak tersedia";
   document.getElementById("visitor-count").textContent =
     visitors.uniqueVisitorsToday;
+  document.getElementById(
+    "visitor-breakdown"
+  ).textContent = `Request hari ini: ${visitors.requestsToday}`;
 
   document.getElementById("rx-speed").textContent = `${formatBytes(
     system.network.rxPerSecond

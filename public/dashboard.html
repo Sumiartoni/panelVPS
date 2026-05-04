@@ -4,106 +4,212 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard VPS</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body>
-    <main class="app-shell">
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">Realtime Infrastructure</p>
-          <h1>VPS Dashboard</h1>
+  <body class="dashboard-body">
+    <main class="container-fluid py-4 px-3 px-lg-4">
+      <div class="hero-panel mb-4">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+          <div>
+            <p class="eyebrow mb-2">Realtime Infrastructure</p>
+            <h1 class="display-6 fw-bold mb-2">VPS Dashboard</h1>
+            <p class="text-secondary mb-0">
+              Pantau beban server, kapasitas resource, dan trafik pengunjung dalam satu panel.
+            </p>
+          </div>
+          <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
+            <span id="generated-at" class="small text-secondary">Memuat data...</span>
+            <button id="logout-button" class="btn btn-outline-dark rounded-pill px-4">
+              Logout
+            </button>
+          </div>
         </div>
-        <div class="topbar-actions">
-          <span id="generated-at" class="muted-text">Memuat data...</span>
-          <button id="logout-button" class="ghost-button">Logout</button>
-        </div>
-      </header>
+      </div>
 
-      <section class="hero-grid">
-        <article class="stat-card">
-          <p>CPU Load</p>
-          <strong id="cpu-load">-</strong>
-        </article>
-        <article class="stat-card">
-          <p>Memory</p>
-          <strong id="memory-usage">-</strong>
-        </article>
-        <article class="stat-card">
-          <p>Disk</p>
-          <strong id="disk-usage">-</strong>
-        </article>
-        <article class="stat-card">
-          <p>Unique Visitor Hari Ini</p>
-          <strong id="visitor-count">-</strong>
-        </article>
+      <section class="row g-4 mb-4">
+        <div class="col-12 col-md-6 col-xl-3">
+          <article class="card dashboard-card h-100">
+            <div class="card-body">
+              <span class="metric-label">CPU Terpakai</span>
+              <h2 id="cpu-load" class="metric-value">-</h2>
+              <p id="cpu-breakdown" class="metric-subtitle mb-0">Used: - | Free: -</p>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <article class="card dashboard-card h-100">
+            <div class="card-body">
+              <span class="metric-label">RAM Terpakai</span>
+              <h2 id="memory-usage" class="metric-value">-</h2>
+              <p id="memory-breakdown" class="metric-subtitle mb-0">Used: - | Free: - | Total: -</p>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <article class="card dashboard-card h-100">
+            <div class="card-body">
+              <span class="metric-label">Disk Terpakai</span>
+              <h2 id="disk-usage" class="metric-value">-</h2>
+              <p id="disk-breakdown" class="metric-subtitle mb-0">Used: - | Free: - | Total: -</p>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <article class="card dashboard-card h-100">
+            <div class="card-body">
+              <span class="metric-label">Visitor Unik Hari Ini</span>
+              <h2 id="visitor-count" class="metric-value">-</h2>
+              <p id="visitor-breakdown" class="metric-subtitle mb-0">Request hari ini: -</p>
+            </div>
+          </article>
+        </div>
       </section>
 
-      <section class="grid-two">
-        <article class="panel">
-          <div class="panel-heading">
-            <h2>Server</h2>
-            <span class="badge" id="server-hostname">-</span>
-          </div>
-          <div class="info-list">
-            <div><span>Platform</span><strong id="platform">-</strong></div>
-            <div><span>Uptime</span><strong id="uptime">-</strong></div>
-            <div><span>RX/s</span><strong id="rx-speed">-</strong></div>
-            <div><span>TX/s</span><strong id="tx-speed">-</strong></div>
-            <div><span>Total RX</span><strong id="rx-total">-</strong></div>
-            <div><span>Total TX</span><strong id="tx-total">-</strong></div>
-          </div>
-        </article>
-
-        <article class="panel">
-          <div class="panel-heading">
-            <h2>Traffic</h2>
-            <span class="badge">Log Based</span>
-          </div>
-          <div class="info-list">
-            <div><span>Total Request</span><strong id="total-requests">-</strong></div>
-            <div><span>Request Hari Ini</span><strong id="requests-today">-</strong></div>
-            <div><span>Total Bandwidth</span><strong id="bandwidth">-</strong></div>
-            <div><span>Status 2xx</span><strong id="ok-status">-</strong></div>
-            <div><span>Status 3xx</span><strong id="redirect-status">-</strong></div>
-            <div><span>Status 4xx/5xx</span><strong id="error-status">-</strong></div>
-          </div>
-        </article>
-      </section>
-
-      <section class="grid-two">
-        <article class="panel">
-          <div class="panel-heading">
-            <h2>Top Path</h2>
-          </div>
-          <div id="top-paths" class="list-block"></div>
-        </article>
-
-        <article class="panel">
-          <div class="panel-heading">
-            <h2>Top IP</h2>
-          </div>
-          <div id="top-ips" class="list-block"></div>
-        </article>
-      </section>
-
-      <section class="panel">
-        <div class="panel-heading">
-          <h2>Akses Terbaru</h2>
+      <section class="row g-4 mb-4">
+        <div class="col-12 col-xl-6">
+          <article class="card dashboard-card h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="section-title mb-0">Server Overview</h2>
+                <span class="badge rounded-pill text-bg-light border" id="server-hostname">-</span>
+              </div>
+              <div class="row g-3">
+                <div class="col-12 col-md-6">
+                  <div class="info-card">
+                    <span class="info-label">Platform</span>
+                    <strong id="platform">-</strong>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="info-card">
+                    <span class="info-label">Uptime</span>
+                    <strong id="uptime">-</strong>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="info-card">
+                    <span class="info-label">RX / detik</span>
+                    <strong id="rx-speed">-</strong>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="info-card">
+                    <span class="info-label">TX / detik</span>
+                    <strong id="tx-speed">-</strong>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="info-card">
+                    <span class="info-label">Total RX</span>
+                    <strong id="rx-total">-</strong>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="info-card">
+                    <span class="info-label">Total TX</span>
+                    <strong id="tx-total">-</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Waktu</th>
-                <th>IP</th>
-                <th>Method</th>
-                <th>Path</th>
-                <th>Status</th>
-                <th>Size</th>
-              </tr>
-            </thead>
-            <tbody id="recent-rows"></tbody>
-          </table>
+
+        <div class="col-12 col-xl-6">
+          <article class="card dashboard-card h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="section-title mb-0">Traffic Overview</h2>
+                <span class="badge rounded-pill text-bg-light border">Log Based</span>
+              </div>
+              <div class="row g-3">
+                <div class="col-12 col-md-6">
+                  <div class="info-card">
+                    <span class="info-label">Total Request</span>
+                    <strong id="total-requests">-</strong>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="info-card">
+                    <span class="info-label">Request Hari Ini</span>
+                    <strong id="requests-today">-</strong>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="info-card">
+                    <span class="info-label">Total Bandwidth</span>
+                    <strong id="bandwidth">-</strong>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="info-card">
+                    <span class="info-label">Status 2xx</span>
+                    <strong id="ok-status">-</strong>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="info-card">
+                    <span class="info-label">Status 3xx</span>
+                    <strong id="redirect-status">-</strong>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="info-card">
+                    <span class="info-label">Status 4xx / 5xx</span>
+                    <strong id="error-status">-</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="row g-4 mb-4">
+        <div class="col-12 col-xl-6">
+          <article class="card dashboard-card h-100">
+            <div class="card-body">
+              <h2 class="section-title mb-3">Top Path</h2>
+              <div id="top-paths" class="stack-list"></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-12 col-xl-6">
+          <article class="card dashboard-card h-100">
+            <div class="card-body">
+              <h2 class="section-title mb-3">Top IP</h2>
+              <div id="top-ips" class="stack-list"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="card dashboard-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="section-title mb-0">Akses Terbaru</h2>
+            <span class="small text-secondary">Realtime 5 detik</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Waktu</th>
+                  <th>IP</th>
+                  <th>Method</th>
+                  <th>Path</th>
+                  <th>Status</th>
+                  <th>Size</th>
+                </tr>
+              </thead>
+              <tbody id="recent-rows"></tbody>
+            </table>
+          </div>
         </div>
       </section>
     </main>

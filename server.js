@@ -271,14 +271,17 @@ async function getSystemStats() {
     platform: `${osInfo.distro || osInfo.platform} ${osInfo.release || ""}`.trim(),
     uptime: time.uptime,
     cpuLoad: Number(currentLoad.currentLoad.toFixed(1)),
+    cpuFree: Number((100 - currentLoad.currentLoad).toFixed(1)),
     memory: {
       used: mem.active,
+      free: mem.available,
       total: mem.total,
       usedPercent: Number(((mem.active / mem.total) * 100).toFixed(1))
     },
     disk: rootDisk
       ? {
           used: rootDisk.used,
+          free: rootDisk.available,
           total: rootDisk.size,
           usedPercent: Number(rootDisk.use.toFixed(1)),
           mount: rootDisk.mount
